@@ -1,0 +1,26 @@
+﻿Catalina Martinez 
+Student ID: 2065453
+Kalah Description:
+        Kalah is a strategy game that is played with two people. It has a board with 6 holes on
+each side and it also has a larger hole on each end of the board. The game starts with 6
+seeds in each of the 6 holes on the sides of the board. On whichever side of the board
+you are, your objective is to get as many seeds as possible in the larger hole on your 
+right hand side. You can pick up the seeds from one of your six holes on your side of the 
+board, and drop one seed in every hole except for the opponents larger hole (which 
+keeps track of their total score). If your last seed you drop is in your larger hole, you get
+to pick another of your 6 holes and continue until it doesn’t end in your larger hole. If 
+your last seed ends up in an empty hole on your side of the board and the opponent 
+has seeds on their corresponding hole on the other side, you may pick up those seeds 
+on their side and the one you dropped in the empty hole and put it in your Kalah. This 
+move will end your turn. The winner is whoever has the most seeds in their Kalah at the
+end of the game, but be careful because if you end up in a situation where it's your turn
+and you have no seeds in any of your six holes and your opponent does, you lose the
+game automatically. 
+
+
+Heuristic Function:
+My final heuristic function takes two things into account: the difference between the player's Kalah score and the AIs Kalah score, and how many total seeds are on each side of the board. I designed my Heuristic function to favor having a higher Kalah score, but I also wanted it to take into account the fact that if the opponent has no seeds on their side, they will lose the game. My heuristic function determines the difference in total scores and then adds the difference of total seeds divided by 5. I wanted the emphasis to be on having the highest score, so I divided the difference in total seeds by 5 because when I didn’t, the AI was focusing too much on having more seeds on their side of the board that it wasn’t taking the opportunities to get more points in their Kalah and thus win the game. One of its example moves is that if its opponent is running low on seeds, the bot will more and more stop making moves to give you seeds up until you run out completely. This is due to the division by 5, if the bot has a lot more seeds than you do, it’s a higher number divided by 5 which is thus a higher number added to the heuristic than previously. The AI had never played this type of defense until I implemented the heuristic in this way, and once I did, the AI had a higher win percentage than before.
+
+
+Program Design & Results:
+When designing the Heuristic function, I initially took a more simple approach and let my function only take into account the difference in each player's total seeds. This led to a really fast computation and runtime (no more than 0.05 seconds for every depth up until 8), but the heuristic function wasn’t very detailed and wasn't making complex decisions and I wanted to try to improve it. I decided to have my heuristic function take into account the next possible state, and based on that I computed the difference between the players' scores and also took into account how many seeds they had on each side of the board. The heuristic function returned the difference in scores with an addition of how many seeds they had on the board to encourage having the most seeds on your side. This change led to a very slow program with any depth greater than 4. It was running anywhere from 3 seconds, up to 10 seconds depending on the complexity of its possible choices. The AI was no longer passing the runtime I needed to be at, and I noticed that the program was favoring having higher seeds on the board more than getting the seeds in the Kalah (for example, if it had 13 seeds and if they chose that hole, they would steal the seeds on my side but it no longer took that option since the total seeds on their side of the board weighed so heavily into the heuristic function). I wanted to lessen the impact of the weight of having seeds on the board to make it take these chances, so I divided the difference between seeds on the board by 5 so it was a smaller weight in the final heuristic. The AI played a way better game with this and ended up beating me quicker, but it was taking a minimum 8 seconds each turn with a depth of 8. I decided that the better the heuristic and the less the depth was right for my program. As I kept testing the AI by playing it, it kept beating me because I kept running out of seeds on my side. It was working perfectly, even with just a depth of 5 and it was beating the runtime expected each time with flying colors (with each move taking about 0.06 seconds). With the AI now considering the option of winning by the opponent running out of seeds, it had a way better success rate than it had previously. The CPU speed on my Windows laptop was at 1.18 GHz.
